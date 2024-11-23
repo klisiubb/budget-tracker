@@ -13,4 +13,44 @@ model User {
   lastName      String
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
+  transactions Transaction[]
+  budgets     Budget[]
+  categories  Category[]
+}
+model Transaction {
+  id          String      @id @default(uuid())
+  amount      Float
+  description String?
+  date        DateTime    @default(now())
+  type        TransactionType
+  category    Category    @relation(fields: [categoryId], references: [id])
+  categoryId  String
+  user        User        @relation(fields: [userId], references: [id])
+  userId      String
+}
+
+model Category {
+  id          String       @id @default(uuid())
+  name        String
+  type        TransactionType
+  user        User         @relation(fields: [userId], references: [id])
+  userId      String
+  transactions Transaction[]
+  budgets     Budget[]
+}
+
+model Budget {
+  id          String       @id @default(uuid())
+  amount      Float
+  startDate   DateTime
+  endDate     DateTime
+  user        User         @relation(fields: [userId], references: [id])
+  userId      String
+  category    Category     @relation(fields: [categoryId], references: [id])
+  categoryId  String
+}
+
+enum TransactionType {
+  INCOME
+  EXPENSE
 }
