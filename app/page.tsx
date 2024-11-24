@@ -1,3 +1,4 @@
+import { FAQ } from "@/components/landing-page/FAQ";
 import { Features } from "@/components/landing-page/Features";
 import { Footer } from "@/components/landing-page/Footer";
 import Hero from "@/components/landing-page/Hero";
@@ -9,6 +10,7 @@ export default function Page() {
       <Navbar />
       <Hero />
       <Features />
+      <FAQ />
       <Footer />
     </>
   );
