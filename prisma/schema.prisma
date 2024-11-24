@@ -6,51 +6,84 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
 model User {
-  id            String         @id @unique
-  email         String         @unique
-  firstName     String
-  lastName      String
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
+  id           String        @id @default(uuid())
+  email        String        @unique
+  firstName    String
+  lastName     String
+  plan         Plan          @default(FREE)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
   transactions Transaction[]
-  budgets     Budget[]
-  categories  Category[]
+  budgets      Budget[]
+  categories   Category[]
+  familyId     String?
+  family       Family?       @relation("FamilyMembers", fields: [familyId], references: [id])
 }
+
+model Family {
+  id           String   @id @default(uuid())
+  name         String
+  familyHeadId String
+  members      User[]   @relation("FamilyMembers")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  membersLimit Int      @default(5)
+}
+
 model Transaction {
-  id          String      @id @default(uuid())
-  amount      Float
-  description String?
-  date        DateTime    @default(now())
-  type        TransactionType
-  category    Category    @relation(fields: [categoryId], references: [id])
-  categoryId  String
-  user        User        @relation(fields: [userId], references: [id])
-  userId      String
+  id           String          @id @default(uuid())
+  amount       Float
+  description  String?
+  date         DateTime        @default(now())
+  type         TransactionType
+  category     Category        @relation(fields: [categoryId], references: [id])
+  categoryId   String
+  user         User            @relation(fields: [userId], references: [id])
+  userId       String
+  currency     Currency        @relation(fields: [currencyCode], references: [code])
+  currencyCode String
 }
 
 model Category {
-  id          String       @id @default(uuid())
-  name        String
-  type        TransactionType
-  user        User         @relation(fields: [userId], references: [id])
-  userId      String
+  id           String          @id @default(uuid())
+  name         String
+  type         TransactionType
+  user         User            @relation(fields: [userId], references: [id])
+  userId       String
   transactions Transaction[]
-  budgets     Budget[]
+  budgets      Budget[]
 }
 
 model Budget {
-  id          String       @id @default(uuid())
-  amount      Float
-  startDate   DateTime
-  endDate     DateTime
-  user        User         @relation(fields: [userId], references: [id])
-  userId      String
-  category    Category     @relation(fields: [categoryId], references: [id])
-  categoryId  String
+  id           String   @id @default(uuid())
+  amount       Float
+  startDate    DateTime
+  endDate      DateTime
+  user         User     @relation(fields: [userId], references: [id])
+  userId       String
+  category     Category @relation(fields: [categoryId], references: [id])
+  categoryId   String
+  currency     Currency @relation(fields: [currencyCode], references: [code])
+  currencyCode String
+}
+
+model Currency {
+  code         String        @id
+  name         String
+  symbol       String?
+  transactions Transaction[]
+  budgets      Budget[]
 }
 
 enum TransactionType {
   INCOME
   EXPENSE
+}
+
+enum Plan {
+  FREE
+  PREMIUM
+  FAMILY
 }
