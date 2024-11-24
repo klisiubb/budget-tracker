@@ -26,7 +26,7 @@ const DashboardNavbar = () => {
     }));
 
   return (
-    <header className="flex items-center justify-between w-full h-16 px-6 border-b border-b-primary">
+    <header className="flex items-center justify-between w-full h-16 px-6 border-b border-b-sidebar-secondary">
       <div className="flex items-center gap-4">
         <SidebarTrigger className="-ml-1 hover:bg-primary" />
         <Separator orientation="vertical" className="h-6" />
