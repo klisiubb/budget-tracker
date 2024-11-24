@@ -1,12 +1,13 @@
-"use client";
 import { Wallet } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { ModeToggle } from "../misc/mode-toggle";
-import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 //TODO Refactor this to accept array of links
-const Navbar = () => {
-  const { isAuthenticated } = useKindeBrowserClient();
+const Navbar = async () => {
+  const { isAuthenticated } = getKindeServerSession();
+  const isUserAuthenticated = await isAuthenticated();
   return (
     <header className="px-4 lg:px-6 h-16 flex items-center sticky top-0 z-100 shadow-xl">
       <Link className="flex items-center justify-center text-primary" href="/">
@@ -33,7 +34,7 @@ const Navbar = () => {
           >
             FAQ
           </Link>
-          {isAuthenticated ? (
+          {isUserAuthenticated ? (
             <div className="flex gap-4">
               <Link
                 href="/dashboard"
