@@ -11,13 +11,13 @@ export default function NotFound() {
         <h1 className="text-4xl md:text-6xl font-bold">
           <span className="text-transparent bg-gradient-to-r from-secondary to-primary bg-clip-text">
             404
-          </span>{" "}
+          </span>
           Page Not Found
         </h1>
 
         <p className="text-xl text-muted-foreground">
-          Oops! It seems like you've ventured into uncharted territory. Let's
-          get you back on track with your budgeting journey.
+          Oops! It seems like you&apos;ve ventured into uncharted territory.
+          Let&apos;s get you back on track with your budgeting journey.
         </p>
 
         <Button asChild className="w-full md:w-auto font-bold group/arrow">
