@@ -30,7 +30,7 @@ const DashboardNavbar = () => {
       <div className="flex items-center gap-4">
         <SidebarTrigger className="-ml-1 hover:bg-primary" />
         <Separator orientation="vertical" className="h-6" />
-        <Breadcrumb>
+        <Breadcrumb className="hidden lg:block">
           <BreadcrumbList className="flex items-center space-x-2 text-sm">
             {segments.map((segment, index) => (
               <React.Fragment key={segment.href}>

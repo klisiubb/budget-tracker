@@ -30,12 +30,26 @@ const data = {
       url: "/dashboard",
       items: [
         {
-          title: "Your Home",
+          title: "Home",
           url: "/dashboard",
         },
         {
-          title: "",
-          url: "/getting-started/project-structure",
+          title: "Settings",
+          url: "/dashboard/settings",
+        },
+      ],
+    },
+    {
+      title: "Budgets",
+      url: "/budget",
+      items: [
+        {
+          title: "Overview",
+          url: "/budget",
+        },
+        {
+          title: "Create new",
+          url: "/budget/create",
         },
       ],
     },
